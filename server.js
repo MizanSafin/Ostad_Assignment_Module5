@@ -3,15 +3,18 @@ const http = require("http");
 
 const server = http.createServer((req, res) => {
   if (req.url === "/") {
-    res.end(`This is Home Page`);
-  }
-  if (req.url === "/about") {
-    res.end(`This is About Page`);
-  }
-  if (req.url === "/contact") {
-    res.end(`This is contact Page`);
-  }
-  if (req.url === "/file-write") {
+    res.writeHead(200, { "content-type": "text/plain" });
+    res.write(`This is Home Page`);
+    res.end();
+  } else if (req.url === "/about") {
+    res.writeHead(200, { "content-type": "text/plain" });
+    res.write(`This is About Page`);
+    res.end();
+  } else if (req.url === "/contact") {
+    res.writeHead(200, { "content-type": "text/plain" });
+    res.write(`This is contact Page`);
+    res.end();
+  } else if (req.url === "/file-write") {
     fs.writeFile("demo.txt", "hello world", (err) => {
       if (err) {
         res.writeHead(401, { "content-type": "text/html" });
@@ -23,6 +26,10 @@ const server = http.createServer((req, res) => {
         res.end();
       }
     });
+  } else {
+    res.writeHead(404, { "content-type": "text/html" });
+    res.write(`<h3 style="color:red">404 Page not Found</h3>`);
+    res.end();
   }
 });
 
